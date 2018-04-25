@@ -4,12 +4,12 @@ let assert = chai.assert;
 
 describe('Level', function () {
     describe('#constructor()', function () {
-        it('Level.cells should not contain nothing except "live" or "dead"', function () {
+        it('Level.cells should not contain nothing except 1 or 0', function () {
             for (let i = 1000; i; i--) {
                 let level = new Level();
                 assert.strictEqual(level.cells.every(row => {
                     return row.every(cell => {
-                        return cell === 'live' || cell === 'dead';
+                        return cell === 1 || cell === 0;
                     })
                 }), true);
             }
@@ -22,28 +22,28 @@ describe('State', function () {
         it('Testing Conway’s Game of Life algorithm with some levels', function () {
             let tests = [
                 {
-                    cells: [['dead', 'dead', 'dead'], ['dead', 'dead', 'dead'], ['dead', 'dead', 'dead']],
-                    expected: [['dead', 'dead', 'dead'], ['dead', 'dead', 'dead'], ['dead', 'dead', 'dead']],
+                    cells: [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+                    expected: [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
                     message: 'all dead',
                 },
                 {
-                    cells: [['live', 'live', 'live'], ['live', 'live', 'live'], ['live', 'live', 'live']],
-                    expected: [['live', 'dead', 'live'], ['dead', 'dead', 'dead'], ['live', 'dead', 'live']],
+                    cells: [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
+                    expected: [[1, 0, 1], [0, 0, 0], [1, 0, 1]],
                     message: 'all live',
                 },
                 {
-                    cells: [['live', 'dead', 'live'], ['dead', 'live', 'dead'], ['live', 'live', 'dead']],
-                    expected: [['dead', 'live', 'dead'], ['dead', 'dead', 'live'], ['live', 'live', 'dead']],
+                    cells: [[1, 0, 1], [0, 1, 0], [1, 1, 0]],
+                    expected: [[0, 1, 0], [0, 0, 1], [1, 1, 0]],
                     message: 'random 1',
                 },
                 {
-                    cells: [['dead', 'dead', 'dead'], ['live', 'dead', 'dead'], ['dead', 'dead', 'live']],
-                    expected: [['dead', 'dead', 'dead'], ['dead', 'dead', 'dead'], ['dead', 'dead', 'dead']],
+                    cells: [[0, 0, 0], [1, 0, 0], [0, 0, 1]],
+                    expected: [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
                     message: 'random 2',
                 },
                 {
-                    cells: [['dead', 'live', 'live'], ['live', 'dead', 'dead'], ['live', 'dead', 'live']],
-                    expected: [['dead', 'live', 'dead'], ['live', 'dead', 'live'], ['dead', 'live', 'dead']],
+                    cells: [[0, 1, 1], [1, 0, 0], [1, 0, 1]],
+                    expected: [[0, 1, 0], [1, 0, 1], [0, 1, 0]],
                     message: 'random 3',
                 },
             ];

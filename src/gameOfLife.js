@@ -1,4 +1,4 @@
-const WIDTH = 500, HEIGHT = 400; // table properties
+const WIDTH = 500, HEIGHT = 300; // table properties
 
 class Display {
     constructor(parent, state) {
@@ -18,7 +18,7 @@ class Display {
             this.dom.appendChild(row);
             for (let x = 0; x < newState.level.width; x++) {
                 let col = document.createElement('td');
-                col.className = newState.level.cells[y][x];
+                col.className = newState.level.cells[y][x] ? 'live' : 'dead';
                 row.appendChild(col);
             }
         }
@@ -46,7 +46,7 @@ class Level {
         for (let y = 0; y < this.height; y++) {
             cells.push([]);
             for (let x = 0; x < this.width; x++) {
-                let status = Math.round(Math.random()) === 0 ? 'dead' : 'live';
+                let status = Math.round(Math.random());
                 cells[y].push(status);
             }
         }
@@ -68,13 +68,13 @@ class State {
                     for (let difY = -1; difY <= 1; difY++) {
                         try {
                             // difX && difY shouldn't be both 0
-                            if (this.level.cells[y + difY][x + difX] === 'live' && (difX || difY)) counter += 1;
+                            if (this.level.cells[y + difY][x + difX] && (difX || difY)) counter += 1;
                         } catch (e) {
                         }
                     }
                 }
                 // console.log(`${cell} cell at (${x}, ${y}) => counter=${counter}`);
-                if (cell === 'live') {
+                if (cell) {
                     if (counter < 2 || counter > 3) {
                         return State.reverseStatus(cell);
                     } else return cell;
@@ -87,8 +87,8 @@ class State {
     }
 
     static reverseStatus(status) {
-        // 'live' => 'dead' vice versa
-        return status === 'dead' ? 'live' : 'dead';
+        // 1 => 0 vice versa
+        return 1 - status;
     }
 }
 
@@ -151,7 +151,7 @@ let timeout;
 autoButton.addEventListener('click', function (e) {
    timeout = setInterval(function () {
         forwardButton.click();
-   }, 100);
+   }, 10);
    autoButton.disabled = true;
 });
 
