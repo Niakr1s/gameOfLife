@@ -1,6 +1,7 @@
 .game {
     border-spacing: 0;
     border: 3px solid black;
+    table-layout: fixed;
 }
 
 .live {

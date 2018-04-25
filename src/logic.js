@@ -1,4 +1,4 @@
-const WIDTH = 500, HEIGHT = 300; // table properties
+const WIDTH = 20, HEIGHT = 15; // table properties
 
 class Display {
     constructor(parent, state) {
@@ -12,14 +12,20 @@ class Display {
         if (this.dom) this.dom.remove();
         this.dom = document.createElement('table');
         this.dom.className = 'game';
+        this.dom.width = '500px';
+        let cellDimension = Number.parseInt(this.dom.width) / WIDTH + 'px';
+        console.log(cellDimension);
+        console.log(newState);
 
         for (let y = 0; y < newState.level.height; y++) {
             let row = document.createElement('tr');
             this.dom.appendChild(row);
             for (let x = 0; x < newState.level.width; x++) {
-                let col = document.createElement('td');
-                col.className = newState.level.cells[y][x] ? 'live' : 'dead';
-                row.appendChild(col);
+                let cell = document.createElement('td');
+                cell.height = cellDimension;
+                cell.width = cellDimension;
+                cell.className = newState.level.cells[y][x] ? 'live' : 'dead';
+                row.appendChild(cell);
             }
         }
         this.parent.appendChild(this.dom);
@@ -28,15 +34,15 @@ class Display {
 
 
 class Level {
-    constructor(cells) {
+    constructor(cells=null, width=null, height=null) {
         // if cells are omitted we initializing it with random coordinates
-        if (!cells) {
-            this.width = WIDTH;
-            this.height = HEIGHT;
-            cells = this.randomCells();
-        } else {
+        if (cells) {
             this.width = cells[0].length;
             this.height = cells.length;
+        } else {
+            this.width = width? width : WIDTH;
+            this.height = height? height : HEIGHT;
+            cells = this.randomCells();
         }
         this.cells = cells;
     }
@@ -117,47 +123,3 @@ class States {
     };
 }
 
-
-let level = new Level();
-let state = new State(level);
-let states = new States(state);
-
-let display = new Display(document.querySelector('#display'), state);
-
-// gui
-let backButton = document.querySelector('#back');
-let forwardButton = document.querySelector('#forward');
-let autoButton = document.querySelector('#auto');
-let stopButton = document.querySelector('#stop');
-let output = document.querySelector('#output');
-
-backButton.addEventListener('click', function (e) {
-    if (!states.isAtStart()) {
-        states.currentIncrement(-1);
-        display.update(states.getCurrentState());
-    }
-});
-
-forwardButton.addEventListener('click', function (e) {
-    if (states.isAtEnd()) { // if we at last element => create new state
-        let newState = states.getCurrentState().update();
-        states.states.push(newState);
-    }
-    states.currentIncrement(1);
-    display.update(states.getCurrentState());
-});
-
-let timeout;
-autoButton.addEventListener('click', function (e) {
-   timeout = setInterval(function () {
-        forwardButton.click();
-   }, 10);
-   autoButton.disabled = true;
-});
-
-stopButton.addEventListener('click', function (e) {
-   if (timeout) {
-       clearInterval(timeout);
-       autoButton.disabled = false;
-   }
-});

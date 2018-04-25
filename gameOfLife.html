@@ -17,7 +17,32 @@
     <span id="output"></span>
 </div>
 
+<div>
+    <label>Количество по горизонтали
+        <input type="range" min="1" max="99" id="x" list="tickmarks">
+    </label>
+    <label for="y">Количество по вертикали
+        <input type="range" min="1" max="99" id="y" list="tickmarks">
+    </label>
+    <button id="random">Зарандомить</button>
 
-<script src="src/gameOfLife.js"></script>
+    <datalist id="tickmarks">
+        <option value="1" label="1">
+        <option value="10">
+        <option value="20">
+        <option value="30">
+        <option value="40">
+        <option value="50" label="50">
+        <option value="60">
+        <option value="70">
+        <option value="80">
+        <option value="90">
+        <option value="99" label="99">
+    </datalist>
+</div>
+
+
+<script src="src/logic.js"></script>
+<script src="src/output.js"></script>
 </body>
 </html>
