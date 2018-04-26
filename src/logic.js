@@ -1,4 +1,6 @@
-const WIDTH = 20, HEIGHT = 15; // table properties
+// default values
+const WIDTH = localStorage.getItem(`rangeX`) ? localStorage.getItem(`rangeX`) : 20;
+const HEIGHT = localStorage.getItem(`rangeY`) ? localStorage.getItem(`rangeY`) : 20;
 
 // displays state on DOM object
 class Display {

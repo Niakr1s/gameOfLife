@@ -31,8 +31,8 @@ let random = document.querySelector('#random');
 // input range section
 let rangeX = document.querySelector('#x');
 let rangeY = document.querySelector('#y');
-rangeX.value = WIDTH;
-rangeY.value = HEIGHT;
+rangeX.value = localStorage.getItem('rangeX');
+rangeY.value = localStorage.getItem('rangeY');
 changeText('По горизонтали: ', rangeX);
 changeText('По вертикали: ', rangeY);
 
@@ -114,11 +114,13 @@ stopButton.addEventListener('click', function (e) {
 
 // changing text on ranges change
 rangeX.addEventListener('change', function (e) {
-    changeText('По горизонтали: ', rangeX)
+    changeText('По горизонтали: ', this);
+    localStorage.setItem('rangeX', this.value);
 });
 
 rangeY.addEventListener('change', function (e) {
-    changeText('По вертикали: ', rangeY)
+    changeText('По вертикали: ', this);
+    localStorage.setItem('rangeY', this.value);
 });
 
 // creating random level, states and updating display
