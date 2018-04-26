@@ -56,7 +56,7 @@ interestingLevels.forEach(function (e, counter) {
 // starting interesting interestingLevels
 levelSelectorForm.addEventListener('submit', function (e) {
     e.preventDefault();
-    outputInit(new Level(interestingLevels[this.select.value].level, rangeX.value, rangeY.value));
+    outputInit(new Level(interestingLevels[this.select.value].level, rangeX.value, rangeY.value, interestingLevels[this.select.value].extendedPos));
 });
 
 // changing output text every time we are clicking any button in controlButton section

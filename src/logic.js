@@ -39,24 +39,28 @@ class Display {
 // if cells => if any or both width and height cells extending to given width or height
 // else creating random level
 class Level {
-    constructor(cells = null, width = null, height = null, extendedPos) {
-        // extendedPos can be "left top right bottom" string with all, some or none elements
+    constructor(cells = null, width = null, height = null, pos) {
+        // pos can be "left top right bottom" string with all, some or none elements
         if (cells) {
-            this.width = cells[0].length;
-            this.height = cells.length;
             // trying to extend with given width, height
-            this.cells = this._extendCells(cells, width, height, extendedPos);
+            this.cells = this._extendCells(cells, width, height, pos);
 
         } else {
-            this.width = width ? width : WIDTH;
-            this.height = height ? height : HEIGHT;
-
-            this.cells = this._randomCells();
+            this.cells = this._randomCells(width ? width : WIDTH, height ? height : HEIGHT);
         }
+        console.log('ALERT', this.width, this.height)
     }
 
-    static _parseExtendedPos(extendedPos) {
-        let splitted = extendedPos.trim().split(/\s+/);
+    get width() {
+        return this.cells[0].length;
+    }
+
+    get height() {
+        return this.cells.length;
+    }
+
+    static _parsePos(pos) {
+        let splitted = pos.trim().split(/\s+/);
         if (splitted.indexOf('left') >= 0 && splitted.indexOf('right') >= 0) {
             splitted.splice(splitted.indexOf('left'), 1);
             splitted.splice(splitted.indexOf('right'), 1);
@@ -68,40 +72,59 @@ class Level {
         return splitted;
     }
 
-    _extendCells(cells, width, height, extendedPos) {
-        let extended = extendedPos ? Level._parseExtendedPos(extendedPos) : extendedPos;
+    _extendCells(cells, width, height, pos) {
+        let extended = pos ? Level._parsePos(pos) : [];
+        console.log('extended', extended, 'starting to extend ', cells);
         if (width) {
-            console.log(cells, ` extending to width(${width})`);
-            if (width > this.width) {
-                for (let w = 0; w < width - this.width; w++) {
-                    cells = cells.map(function (row) {
-                        (w % 2) ? row.unshift(0) : row.push(0);
+            console.log(`extending to width(${width})`, cells);
+            console.log('total counter = ', width - cells[0].length);
+            let toExtend = width - cells[0].length;
+            if (toExtend > 0) {
+                for (let w = 0; w < toExtend; w++) {
+                    console.log(`counter = ${w} of ${toExtend}`);
+                    cells = cells.map(function (row, counter) {
+                        if (extended.includes('left')) {
+                            row.push(0);
+                        } else if (extended.includes('right')) {
+                            row.unshift(0);
+                        } else {
+                            (w % 2) ? row.unshift(0) : row.push(0);
+                        }
+                        console.log(`${counter} row = `, row);
                         return row
                     })
                 }
-                this.width = width;
             }
+            console.log(`after extending to width(${width})`, cells);
         }
         if (height) {
-            console.log(cells, ` extending to height(${height})`);
-            if (height > this.height) {
-                for (let h = 0; h < height - this.height; h++) {
-                    let row = new Array(Number.parseInt(this.width));
+            console.log(`extending to height(${height})`, cells);
+            let toExtend = height - cells.length;
+            if (toExtend > 0) {
+                for (let h = 0; h < toExtend; h++) {
+                    let row = new Array(Number.parseInt(cells[0].length));
                     row.fill(0);
-                    (h % 2) ? cells.unshift(row) : cells.push(row);
+                    if (extended.includes('top')) {
+                        cells.push(row);
+                    } else if (extended.includes('bottom')) {
+                        cells.unshift(row);
+                    } else {
+                        (h % 2) ? cells.unshift(row) : cells.push(row);
+                    }
                 }
-                this.height = height;
             }
+            console.log(`after to height(${height})`, cells);
 
         }
+        console.log('after extending ', cells);
         return cells;
     }
 
-    _randomCells() {
+    _randomCells(width, height) {
         let cells = [];
-        for (let y = 0; y < this.height; y++) {
+        for (let y = 0; y < height; y++) {
             cells.push([]);
-            for (let x = 0; x < this.width; x++) {
+            for (let x = 0; x < width; x++) {
                 let status = Math.round(Math.random());
                 cells[y].push(status);
             }

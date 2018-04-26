@@ -76,12 +76,61 @@ describe('Level', function () {
             ];
             tests.forEach(function (test, counter) {
                 let level = new Level(test.cells, test.width, test.height);
-                assert.deepStrictEqual(level.cells, test.expected, 'test #' + counter);
+                assert.deepStrictEqual(level.cells, test.expected, 'test #' + counter + ' ' + level.cells + ';' + test.expected);
+            })
+        });
+
+        it('Testing extend cells with given width and height and pos', function () {
+            let tests = [
+                {
+                    cells: [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
+                    expected: [[0, 0, 1, 1, 1], [0, 0, 1, 1, 1], [0, 0, 1, 1, 1]],
+                    width: 5,
+                    height: 2,
+                    extendedPos: 'right',
+                },
+
+                {
+                    cells: [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
+                    expected: [[0, 0, 0], [0, 0, 0], [1, 1, 1], [1, 1, 1], [1, 1, 1]],
+                    width: 2,
+                    height: 5,
+                    extendedPos: 'bottom',
+                },
+
+                {
+                    cells: [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
+                    expected: [[1, 1, 1, 0, 0], [1, 1, 1, 0, 0], [1, 1, 1, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+                    width: 5,
+                    height: 5,
+                    extendedPos: 'left top',
+                },
+
+                {
+                    cells: [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
+                    expected: [[1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 0, 0], [0, 0, 0]],
+                    width: null,
+                    height: 5,
+                    extendedPos: 'left top',
+                },
+
+                {
+                    cells: [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
+                    expected: [[0, 0, 1, 1, 1], [0, 0, 1, 1, 1], [0, 0, 1, 1, 1]],
+                    width: 5,
+                    height: null,
+                    extendedPos: 'right bottom',
+                },
+
+            ];
+            tests.forEach(function (test, counter) {
+                let level = new Level(test.cells, test.width, test.height, test.extendedPos);
+                assert.deepStrictEqual(level.cells, test.expected, 'test #' + counter + ' ' + level.cells + ';' + test.expected);
             })
         });
 
     });
-    describe('#_parseExtendedPos', function () {
+    describe('#_parsePos', function () {
         it('Parsing some extendedPos strings', function () {
             let tests =
                 [
@@ -107,7 +156,7 @@ describe('Level', function () {
                     },
                 ];
             tests.forEach(function (test, counter) {
-                assert.deepStrictEqual(Level._parseExtendedPos(test.extendedPos), test.expected, 'test #' + counter);
+                assert.deepStrictEqual(Level._parsePos(test.extendedPos), test.expected, 'test #' + counter);
             });
 
         });
