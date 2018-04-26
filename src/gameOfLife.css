@@ -1,16 +1,16 @@
 .game {
     border-spacing: 0;
-    border: 3px solid black;
+    border: 3px solid gray;
     table-layout: fixed;
     margin: auto;
 }
 
 .live {
-    background-color: green;
+    background-color: black;
 }
 
 .dead {
-    background-color: red;
+    background-color: white;
 
 }
 
