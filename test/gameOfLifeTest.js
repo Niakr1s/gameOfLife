@@ -116,3 +116,14 @@ describe('State', function () {
         })
     })
 });
+
+describe('LocalStorage', function () {
+    describe('const WIDTH, HEIGHT', function () {
+        it('WIDTH, HEIGHT should be not null when no localStorage value. ATTENTION: it deletes "rangeX" and "rangeY" from localStorage, so RELOAD AT LEAST ONCE', function () {
+            localStorage.removeItem('rangeX');
+            localStorage.removeItem('rangeY');
+            assert.isNotNull(WIDTH, 'checking WIDTH');
+            assert.isNotNull(HEIGHT, 'checking HEIGHT');
+        })
+    })
+});
