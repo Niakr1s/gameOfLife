@@ -1,4 +1,4 @@
-let level, firstState, states, display = new Display(document.querySelector('#display'));
+let states, display = new Display(document.querySelector('#display'));
 
 let output = document.querySelector('#output');
 output.update = function () {
@@ -7,8 +7,7 @@ output.update = function () {
 
 // init level, firstState, states, display with new Level object
 function outputInit(newLevel) {
-    level = newLevel;
-    firstState = new State(level);
+    let firstState = new State(newLevel);
     states = new States(firstState);
     display.update(firstState);
     output.update();
@@ -102,6 +101,7 @@ autoButton.addEventListener('click', function (e) {
         forwardButton.click();
     }, 50);
     autoButton.disabled = true;
+    stopButton.disabled = false;
 });
 
 // stop auto
@@ -109,6 +109,7 @@ stopButton.addEventListener('click', function (e) {
     if (timeout) {
         clearInterval(timeout);
         autoButton.disabled = false;
+        stopButton.disabled = true;
     }
 });
 
