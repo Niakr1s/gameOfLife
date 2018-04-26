@@ -1,0 +1,1 @@
+<h6>Simple Conway's Game of Life implementation
