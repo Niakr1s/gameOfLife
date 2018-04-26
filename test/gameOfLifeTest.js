@@ -59,6 +59,20 @@ describe('Level', function () {
                     height: 5,
                 },
 
+                {
+                    cells: [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
+                    expected: [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
+                    width: null,
+                    height: 5,
+                },
+
+                {
+                    cells: [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
+                    expected: [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
+                    width: 5,
+                    height: null,
+                },
+
             ];
             tests.forEach(function (test, counter) {
                 let level = new Level(test.cells, test.width, test.height);
