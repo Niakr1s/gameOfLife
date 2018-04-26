@@ -34,16 +34,17 @@ class Display {
 }
 
 // represents starting level
-// if cells width and height constructs from it
+// if cells => if any or both width and height cells extending to given width or height
 // else creating random level
 class Level {
     constructor(cells = null, width = null, height = null) {
-        // if cells are omitted we initializing it with random coordinates
+
         if (cells) {
+            // trying to populate cells with given width or height
             this.width = cells[0].length;
             this.height = cells.length;
-            if (width && height) {
-                console.log(cells, ` extending to (${width}, ${height})`);
+            if (width) {
+                console.log(cells, ` extending to width(${width})`);
                 if (width > this.width) {
                     for (let w = 0; w < width - this.width; w++) {
                         cells = cells.map(function (row) {
@@ -53,6 +54,9 @@ class Level {
                     }
                     this.width = width;
                 }
+            }
+            if (height) {
+                console.log(cells, ` extending to height(${height})`);
                 if (height > this.height) {
                     for (let h = 0; h < height - this.height; h++) {
                         let row = new Array(Number.parseInt(this.width));
@@ -61,9 +65,11 @@ class Level {
                     }
                     this.height = height;
                 }
-                console.log(`extended cells: `, cells)
+
             }
+            console.log(`extended cells: `, cells)
         } else {
+            // if cells are omitted we initializing it with random coordinates
             this.width = width ? width : WIDTH;
             this.height = height ? height : HEIGHT;
             cells = this._randomCells();
