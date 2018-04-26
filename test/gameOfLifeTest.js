@@ -13,6 +13,57 @@ describe('Level', function () {
                     })
                 }), true);
             }
+        });
+        it('Testing extend cells with given width and height', function () {
+            let tests = [
+                {
+                    cells: [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
+                    expected: [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
+                    width: 3,
+                    height: 3,
+                },
+
+
+                {
+                    cells: [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
+                    expected: [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
+                    width: 0,
+                    height: 0,
+                },
+
+                {
+                    cells: [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
+                    expected: [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
+                    width: -10,
+                    height: -10,
+                },
+
+                {
+                    cells: [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
+                    expected: [[1, 1, 1, 0], [1, 1, 1, 0], [1, 1, 1, 0]],
+                    width: 4,
+                    height: 2,
+                },
+
+                {
+                    cells: [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
+                    expected: [[1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 0, 0]],
+                    width: 2,
+                    height: 4,
+                },
+
+                {
+                    cells: [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
+                    expected: [[0, 0, 0, 0, 0], [0, 1, 1, 1, 0], [0, 1, 1, 1, 0], [0, 1, 1, 1, 0], [0, 0, 0, 0, 0]],
+                    width: 5,
+                    height: 5,
+                },
+
+            ];
+            tests.forEach(function (test, counter) {
+                let level = new Level(test.cells, test.width, test.height);
+                assert.deepStrictEqual(level.cells, test.expected, 'test #' + counter);
+            })
         })
     })
 });
@@ -24,34 +75,29 @@ describe('State', function () {
                 {
                     cells: [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
                     expected: [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
-                    message: 'all dead',
                 },
                 {
                     cells: [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
                     expected: [[1, 0, 1], [0, 0, 0], [1, 0, 1]],
-                    message: 'all live',
                 },
                 {
                     cells: [[1, 0, 1], [0, 1, 0], [1, 1, 0]],
                     expected: [[0, 1, 0], [0, 0, 1], [1, 1, 0]],
-                    message: 'random 1',
                 },
                 {
                     cells: [[0, 0, 0], [1, 0, 0], [0, 0, 1]],
                     expected: [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
-                    message: 'random 2',
                 },
                 {
                     cells: [[0, 1, 1], [1, 0, 0], [1, 0, 1]],
                     expected: [[0, 1, 0], [1, 0, 1], [0, 1, 0]],
-                    message: 'random 3',
                 },
             ];
-            tests.forEach(function (test) {
+            tests.forEach(function (test, counter) {
                 let level = new Level(test.cells);
                 let state = new State(level);
                 let newState = state.update();
-                assert.deepStrictEqual(newState.level.cells, test.expected, test.message);
+                assert.deepStrictEqual(newState.level.cells, test.expected, 'test #' + counter);
             })
         })
     })
