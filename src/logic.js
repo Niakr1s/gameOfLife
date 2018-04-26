@@ -43,6 +43,7 @@ class Level {
             this.width = cells[0].length;
             this.height = cells.length;
             if (width && height) {
+                console.log(cells, ` extending to (${width}, ${height})`);
                 if (width > this.width) {
                     for (let w = 0; w < width - this.width; w++) {
                         cells = cells.map(function (row) {
@@ -54,12 +55,13 @@ class Level {
                 }
                 if (height > this.height) {
                     for (let h = 0; h < height - this.height; h++) {
-                        let row = new Array(this.width);
+                        let row = new Array(Number.parseInt(this.width));
                         row.fill(0);
                         (h % 2) ? cells.unshift(row) : cells.push(row);
                     }
                     this.height = height;
                 }
+                console.log(`extended cells: `, cells)
             }
         } else {
             this.width = width ? width : WIDTH;
