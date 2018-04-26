@@ -1,11 +1,14 @@
 const WIDTH = 20, HEIGHT = 15; // table properties
 
+// displays state on DOM object
 class Display {
     constructor(parent, state) {
         this.parent = parent;
         this.state = state;
         this.dom = null;
-        this.update(this.state);
+        if (state) {
+            this.update(this.state);
+        }
     }
 
     update(newState) {
@@ -15,8 +18,6 @@ class Display {
         const width = '720';
         const cellDimension = Math.min(width / newState.level.width, (screen.availHeight - 300) / newState.level.height);
         this.dom.width = (cellDimension * newState.level.width) + 'px';
-        console.log(cellDimension);
-        console.log(newState);
 
         for (let y = 0; y < newState.level.height; y++) {
             let row = document.createElement('tr');
@@ -32,7 +33,9 @@ class Display {
     }
 }
 
-
+// represents starting level
+// if cells width and height constructs from it
+// else creating random level
 class Level {
     constructor(cells = null, width = null, height = null) {
         // if cells are omitted we initializing it with random coordinates
@@ -42,12 +45,12 @@ class Level {
         } else {
             this.width = width ? width : WIDTH;
             this.height = height ? height : HEIGHT;
-            cells = this.randomCells();
+            cells = this._randomCells();
         }
         this.cells = cells;
     }
 
-    randomCells() {
+    _randomCells() {
         let cells = [];
         for (let y = 0; y < this.height; y++) {
             cells.push([]);
@@ -60,9 +63,10 @@ class Level {
     }
 }
 
+// constructs State object, representing level
 class State {
-    constructor(level) {
-        this.level = level;
+    constructor(startLevel) {
+        this.level = startLevel;
     }
 
     update() {
@@ -98,8 +102,8 @@ class State {
     }
 }
 
+// Array of State objects
 class States {
-    // bunch of State classes
     constructor(firstState) {
         this.states = [firstState];
         this.current = 0;
@@ -119,7 +123,14 @@ class States {
 
     currentIncrement(i) {
         this.current += i;
-        output.textContent = states.current + '-й шаг';
+    };
+
+    setAtFirst() {
+        this.current = 0;
+    };
+
+    setAtLast() {
+        this.current = this.states.length - 1;
     };
 }
 
