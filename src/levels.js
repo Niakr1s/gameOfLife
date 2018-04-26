@@ -1,4 +1,4 @@
-const levels =
+const interestingLevels =
 
     [
         {

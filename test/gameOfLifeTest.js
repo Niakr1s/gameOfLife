@@ -19,7 +19,7 @@ describe('Level', function () {
 
 describe('State', function () {
     describe('#update()', function () {
-        it('Testing Conway’s Game of Life algorithm with some levels', function () {
+        it('Testing Conway’s Game of Life algorithm with some interestingLevels', function () {
             let tests = [
                 {
                     cells: [[0, 0, 0], [0, 0, 0], [0, 0, 0]],

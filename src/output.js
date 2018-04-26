@@ -11,7 +11,7 @@ function outputInit(newLevel) {
 // initializing new random level
 outputInit(new Level());
 
-// gui
+// buttons querying
 let controlButtons = document.querySelector('#controlButtons');
 let firstButton = document.querySelector('#first');
 let backButton = document.querySelector('#back');
@@ -24,6 +24,7 @@ output.textContent = '0-й шаг';
 let random = document.querySelector('#random');
 
 
+// input range section
 let rangeX = document.querySelector('#x');
 let rangeY = document.querySelector('#y');
 rangeX.value = WIDTH;
@@ -31,26 +32,28 @@ rangeY.value = HEIGHT;
 changeText('По горизонтали: ', rangeX);
 changeText('По вертикали: ', rangeY);
 
-function changeText(text, range) {
-    let parent = range.parentNode;
-    parent.textContent = text + range.value;
-    parent.appendChild(range);
+function changeText(text, rangeElement) {
+    let parent = rangeElement.parentNode;
+    parent.textContent = text + rangeElement.value;
+    parent.appendChild(rangeElement);
 }
 
+// form for select interesting levels
 let levelSelectorForm = document.querySelector('#levelSelectorForm');
-levels.forEach(function (e, counter) {
+interestingLevels.forEach(function (e, counter) {
     let option = document.createElement('option');
     option.textContent = e.description;
     option.value = counter;
     levelSelectorForm.select.appendChild(option);
 });
 
+
 // listeners section //
 
-// starting interesting levels
+// starting interesting interestingLevels
 levelSelectorForm.addEventListener('submit', function (e) {
     e.preventDefault();
-    outputInit(new Level(levels[this.select.value].level));
+    outputInit(new Level(interestingLevels[this.select.value].level));
 });
 
 // changing output text every time we are clicking any button in controlButton section
@@ -88,7 +91,7 @@ lastButton.addEventListener('click', function (e) {
     display.update(states.getCurrentState());
 });
 
-// auto stepping
+// start auto
 let timeout;
 autoButton.addEventListener('click', function (e) {
     timeout = setInterval(function () {
@@ -97,7 +100,7 @@ autoButton.addEventListener('click', function (e) {
     autoButton.disabled = true;
 });
 
-// stop suto
+// stop auto
 stopButton.addEventListener('click', function (e) {
     if (timeout) {
         clearInterval(timeout);
