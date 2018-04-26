@@ -78,8 +78,40 @@ describe('Level', function () {
                 let level = new Level(test.cells, test.width, test.height);
                 assert.deepStrictEqual(level.cells, test.expected, 'test #' + counter);
             })
-        })
-    })
+        });
+
+    });
+    describe('#_parseExtendedPos', function () {
+        it('Parsing some extendedPos strings', function () {
+            let tests =
+                [
+                    {
+                        extendedPos: 'left top',
+                        expected: ['left', 'top'],
+                    },
+
+                    {
+                        extendedPos: 'left top right',
+                        expected: ['top'],
+                    },
+
+
+                    {
+                        extendedPos: 'left top right bottom',
+                        expected: [],
+                    },
+
+                    {
+                        extendedPos: 'top right bottom',
+                        expected: ['right'],
+                    },
+                ];
+            tests.forEach(function (test, counter) {
+                assert.deepStrictEqual(Level._parseExtendedPos(test.extendedPos), test.expected, 'test #' + counter);
+            });
+
+        });
+    });
 });
 
 describe('State', function () {
