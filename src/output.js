@@ -30,8 +30,8 @@ let random = document.querySelector('#random');
 // input range section
 let rangeX = document.querySelector('#x');
 let rangeY = document.querySelector('#y');
-rangeX.value = localStorage.getItem('rangeX');
-rangeY.value = localStorage.getItem('rangeY');
+rangeX.value = WIDTH;
+rangeY.value = HEIGHT;
 changeText('По горизонтали: ', rangeX);
 changeText('По вертикали: ', rangeY);
 

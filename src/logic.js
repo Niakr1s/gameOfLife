@@ -1,6 +1,6 @@
 // default values
-const WIDTH = localStorage.getItem(`rangeX`) ? localStorage.getItem(`rangeX`) : 20;
-const HEIGHT = localStorage.getItem(`rangeY`) ? localStorage.getItem(`rangeY`) : 20;
+const WIDTH = localStorage.getItem(`rangeX`) || 20;
+const HEIGHT = localStorage.getItem(`rangeY`) || 20;
 
 // displays state on DOM object
 class Display {
@@ -36,19 +36,17 @@ class Display {
 }
 
 // represents starting level
-// if cells => if any or both width and height cells extending to given width or height
+// if cells => extending given width or height with given pos
+// pos can be "left top right bottom" string with all, some or none elements
 // else creating random level
 class Level {
-    constructor(cells = null, width = null, height = null, pos) {
-        // pos can be "left top right bottom" string with all, some or none elements
+    constructor(cells, width, height, pos) {
         if (cells) {
-            // trying to extend with given width, height
+            // trying to extend with given width, height, pos
             this.cells = this._extendCells(cells, width, height, pos);
-
         } else {
             this.cells = this._randomCells(width ? width : WIDTH, height ? height : HEIGHT);
         }
-        console.log('ALERT', this.width, this.height)
     }
 
     get width() {
@@ -74,14 +72,11 @@ class Level {
 
     _extendCells(cells, width, height, pos) {
         let extended = pos ? Level._parsePos(pos) : [];
-        console.log('extended', extended, 'starting to extend ', cells);
+        console.log('extended', extended, `starting to extend to w=${width} h=${height} `, cells);
         if (width) {
-            console.log(`extending to width(${width})`, cells);
-            console.log('total counter = ', width - cells[0].length);
             let toExtend = width - cells[0].length;
             if (toExtend > 0) {
                 for (let w = 0; w < toExtend; w++) {
-                    console.log(`counter = ${w} of ${toExtend}`);
                     cells = cells.map(function (row, counter) {
                         if (extended.includes('left')) {
                             row.push(0);
@@ -90,15 +85,12 @@ class Level {
                         } else {
                             (w % 2) ? row.unshift(0) : row.push(0);
                         }
-                        console.log(`${counter} row = `, row);
                         return row
                     })
                 }
             }
-            console.log(`after extending to width(${width})`, cells);
         }
         if (height) {
-            console.log(`extending to height(${height})`, cells);
             let toExtend = height - cells.length;
             if (toExtend > 0) {
                 for (let h = 0; h < toExtend; h++) {
@@ -113,8 +105,6 @@ class Level {
                     }
                 }
             }
-            console.log(`after to height(${height})`, cells);
-
         }
         console.log('after extending ', cells);
         return cells;
