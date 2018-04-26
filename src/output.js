@@ -1,11 +1,17 @@
 let level, firstState, states, display = new Display(document.querySelector('#display'));
 
+let output = document.querySelector('#output');
+output.update = function () {
+    this.textContent = output.textContent = states.current + '-й шаг';
+};
+
 // init level, firstState, states, display with new Level object
 function outputInit(newLevel) {
     level = newLevel;
     firstState = new State(level);
     states = new States(firstState);
     display.update(firstState);
+    output.update();
 }
 
 // initializing new random level
@@ -19,8 +25,6 @@ let forwardButton = document.querySelector('#forward');
 let lastButton = document.querySelector('#last');
 let autoButton = document.querySelector('#auto');
 let stopButton = document.querySelector('#stop');
-let output = document.querySelector('#output');
-output.textContent = '0-й шаг';
 let random = document.querySelector('#random');
 
 
@@ -58,7 +62,7 @@ levelSelectorForm.addEventListener('submit', function (e) {
 
 // changing output text every time we are clicking any button in controlButton section
 controlButtons.addEventListener('click', function (e) {
-    output.textContent = states.current + '-й шаг';
+    output.update();
 });
 
 // back one step
