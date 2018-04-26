@@ -2,6 +2,7 @@
     border-spacing: 0;
     border: 3px solid black;
     table-layout: fixed;
+    margin: auto;
 }
 
 .live {
@@ -11,4 +12,11 @@
 .dead {
     background-color: red;
 
+}
+
+.slider-wrapper {
+    display: inline-table;
+    width: 150px;
+    height: 20px;
+    padding: 0;
 }

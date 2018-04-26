@@ -12,8 +12,9 @@ class Display {
         if (this.dom) this.dom.remove();
         this.dom = document.createElement('table');
         this.dom.className = 'game';
-        this.dom.width = '500px';
-        let cellDimension = Number.parseInt(this.dom.width) / WIDTH + 'px';
+        const width = '720';
+        const cellDimension = Math.min(width / newState.level.width, (screen.availHeight - 300) / newState.level.height);
+        this.dom.width = (cellDimension * newState.level.width) + 'px';
         console.log(cellDimension);
         console.log(newState);
 
@@ -22,8 +23,7 @@ class Display {
             this.dom.appendChild(row);
             for (let x = 0; x < newState.level.width; x++) {
                 let cell = document.createElement('td');
-                cell.height = cellDimension;
-                cell.width = cellDimension;
+                cell.width = cell.height = cellDimension + 'px';
                 cell.className = newState.level.cells[y][x] ? 'live' : 'dead';
                 row.appendChild(cell);
             }
@@ -34,14 +34,14 @@ class Display {
 
 
 class Level {
-    constructor(cells=null, width=null, height=null) {
+    constructor(cells = null, width = null, height = null) {
         // if cells are omitted we initializing it with random coordinates
         if (cells) {
             this.width = cells[0].length;
             this.height = cells.length;
         } else {
-            this.width = width? width : WIDTH;
-            this.height = height? height : HEIGHT;
+            this.width = width ? width : WIDTH;
+            this.height = height ? height : HEIGHT;
             cells = this.randomCells();
         }
         this.cells = cells;

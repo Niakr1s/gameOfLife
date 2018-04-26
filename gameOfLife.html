@@ -1,46 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="mdl-js">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Game Of Life</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <link rel="stylesheet" href="src/gameOfLife.css">
 </head>
 <body>
+<br>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-9">
+            <div id="display"></div>
 
-<div id="display"></div>
+            <div class="d-flex justify-content-center">
+                <button class="btn btn-outline-primary p-2" id="back">Назад</button>&nbsp;
+                <button class="btn btn-outline-primary p-2" id="auto">Авто</button>&nbsp;
+                <button class="btn btn-outline-primary p-2" id="stop">Стоп</button>&nbsp;
+                <button class="btn btn-outline-primary p-2" id="forward">Вперед</button>&nbsp;
+                <span class="p-2" id="output"></span>
+            </div>
 
-<div>
-    <button id="back">Назад</button>
-    <button id="auto">Авто</button>
-    <button id="stop">Стоп</button>
-    <button id="forward">Вперед</button>
-    <span id="output"></span>
+            <div class="d-flex justify-content-center">
+                <label class="slider-wrapper">Количество по горизонтали
+                    <input type="range" min="1" max="100" id="x" list="tickmarksX">
+                </label>&nbsp;
+                <label class="slider-wrapper">Количество по вертикали
+                    <input type="range" min="1" max="50" id="y" list="tickmarksY">
+                </label>&nbsp;
+                <button class="btn btn-outline-primary p-2 align-self-center" id="random">Зарандомить</button>
+            </div>
+
+            <datalist id="tickmarksX">
+                <option value="1" label="1">
+                <option value="10">
+                <option value="20">
+                <option value="30">
+                <option value="40">
+                <option value="50" label="50">
+                <option value="60">
+                <option value="70">
+                <option value="80">
+                <option value="90">
+                <option value="100" label="100">
+            </datalist>
+
+            <datalist id="tickmarksY">
+                <option value="1" label="1">
+                <option value="10">
+                <option value="20">
+                <option value="30">
+                <option value="40">
+                <option value="50" label="50">
+            </datalist>
+        </div>
+
+
+    </div>
+
 </div>
-
-<div>
-    <label>Количество по горизонтали
-        <input type="range" min="1" max="99" id="x" list="tickmarks">
-    </label>
-    <label for="y">Количество по вертикали
-        <input type="range" min="1" max="99" id="y" list="tickmarks">
-    </label>
-    <button id="random">Зарандомить</button>
-
-    <datalist id="tickmarks">
-        <option value="1" label="1">
-        <option value="10">
-        <option value="20">
-        <option value="30">
-        <option value="40">
-        <option value="50" label="50">
-        <option value="60">
-        <option value="70">
-        <option value="80">
-        <option value="90">
-        <option value="99" label="99">
-    </datalist>
-</div>
-
 
 <script src="src/logic.js"></script>
 <script src="src/output.js"></script>

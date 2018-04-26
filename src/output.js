@@ -18,10 +18,10 @@ let rangeY = document.querySelector('#y');
 rangeX.value = WIDTH;
 rangeY.value = HEIGHT;
 
-changeText(rangeX, 'По горизонтали: ');
-changeText(rangeY, 'По вертикали: ');
+changeText('По горизонтали: ', rangeX);
+changeText('По вертикали: ', rangeY);
 
-function changeText(range, text) {
+function changeText(text, range) {
     let parent = range.parentNode;
     parent.textContent = text + range.value;
     parent.appendChild(range);
@@ -59,11 +59,11 @@ stopButton.addEventListener('click', function (e) {
 });
 
 rangeX.addEventListener('change', function (e) {
-    changeText(rangeX, 'По горизонтали: ')
+    changeText('По горизонтали: ', rangeX)
 });
 
 rangeY.addEventListener('change', function (e) {
-    changeText(rangeY, 'По вертикали: ')
+    changeText('По вертикали: ', rangeY)
 });
 
 random.addEventListener('click', function (e) {
