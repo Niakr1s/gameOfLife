@@ -195,6 +195,38 @@ describe('State', function () {
                 assert.deepStrictEqual(newState.level.cells, test.expected, 'test #' + counter);
             })
         })
+    });
+	describe('#update(borderless=true)', function () {
+        it('Testing Conway’s Game of Life algorithm with some interestingLevels', function () {
+            let tests = [
+                {
+                    cells: [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+                    expected: [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+                },
+                {
+                    cells: [[1, 1, 1], [1, 1, 1], [1, 1, 1]],
+                    expected: [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+                },
+                {
+                    cells: [[1, 0, 1], [0, 1, 0], [1, 1, 0]],
+                    expected: [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+                },
+                {
+                    cells: [[0, 0, 0], [1, 0, 0], [0, 0, 1]],
+                    expected: [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+                },
+                {
+                    cells: [[0, 1, 1], [1, 0, 0], [1, 0, 1]],
+                    expected: [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+                },
+            ];
+            tests.forEach(function (test, counter) {
+                let level = new Level(test.cells);
+                let state = new State(level);
+                let newState = state.update(true);
+                assert.deepStrictEqual(newState.level.cells, test.expected, 'test #' + counter + ' ' + newState.level.cells);
+            })
+        })
     })
 });
 
