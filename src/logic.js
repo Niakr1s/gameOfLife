@@ -129,9 +129,9 @@ class State {
         this.level = startLevel;
     }
 
-    update() {
+    update(borderless=true) {
         // updates with Conway’s Game of Life algorithm
-		let cells = this.level.cells;
+		let {cells, width, height} = this.level;
         let newCells = cells.map((row, y) => {
             return row.map((cell, x) => {
                 let counter = 0;
@@ -139,20 +139,14 @@ class State {
                     for (let difY = -1; difY <= 1; difY++) {
 						if (difX || difY) {
 							let siblingX = x + difX, siblingY = y + difY;
-							if (siblingX >= cells[0].length) {
-								siblingX = 0;
-							} else if (siblingX < 0) {
-								siblingX = cells[0].length - 1;
+							if (borderless) {
+								siblingX >= width ? siblingX = 0 : siblingX < 0 ? siblingX = width - 1 : null;
+								siblingY >= height ? siblingY = 0 : siblingY < 0 ? siblingY = height - 1 : null;
 							}
-							if (siblingY >= cells.length) {
-								siblingY = 0;
-							} else if (siblingY < 0) {
-								siblingY = cells.length - 1;
-							}
-							cells[siblingY][siblingX] && counter++;
+							try {
+								cells[siblingY][siblingX] && counter++;
+							} catch (e) {};
 						}
-						
-
                     }
                 }
                 // console.log(`${cell} cell at (${x}, ${y}) => counter=${counter}`);

@@ -164,7 +164,7 @@ describe('Level', function () {
 });
 
 describe('State', function () {
-    describe('#update()', function () {
+    describe('#update(borderless=false)', function () {
         it('Testing Conway’s Game of Life algorithm with some interestingLevels', function () {
             let tests = [
                 {
@@ -191,7 +191,7 @@ describe('State', function () {
             tests.forEach(function (test, counter) {
                 let level = new Level(test.cells);
                 let state = new State(level);
-                let newState = state.update();
+                let newState = state.update(false);
                 assert.deepStrictEqual(newState.level.cells, test.expected, 'test #' + counter);
             })
         })
