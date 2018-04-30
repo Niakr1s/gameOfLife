@@ -83,7 +83,7 @@ class Level {
                         } else if (extended.includes('right')) {
                             row.unshift(0);
                         } else {
-                            (w % 2) ? row.unshift(0) : row.push(0);
+                            (w % 2) ? row.unshift(0): row.push(0);
                         }
                         return row
                     })
@@ -101,7 +101,7 @@ class Level {
                     } else if (extended.includes('bottom')) {
                         cells.unshift(row);
                     } else {
-                        (h % 2) ? cells.unshift(row) : cells.push(row);
+                        (h % 2) ? cells.unshift(row): cells.push(row);
                     }
                 }
             }
@@ -129,24 +129,29 @@ class State {
         this.level = startLevel;
     }
 
-    update(borderless=true) {
+    update(borderless = true) {
         // updates with Conway’s Game of Life algorithm
-		let {cells, width, height} = this.level;
+        let {
+            cells,
+            width,
+            height
+        } = this.level;
         let newCells = cells.map((row, y) => {
             return row.map((cell, x) => {
                 let counter = 0;
                 for (let difX = -1; difX <= 1; difX++) {
                     for (let difY = -1; difY <= 1; difY++) {
-						if (difX || difY) {
-							let siblingX = x + difX, siblingY = y + difY;
-							if (borderless) {
-								siblingX >= width ? siblingX = 0 : siblingX < 0 ? siblingX = width - 1 : null;
-								siblingY >= height ? siblingY = 0 : siblingY < 0 ? siblingY = height - 1 : null;
-							}
-							try {
-								cells[siblingY][siblingX] && counter++;
-							} catch (e) {};
-						}
+                        if (difX || difY) {
+                            let siblingX = x + difX,
+                                siblingY = y + difY;
+                            if (borderless) {
+                                siblingX >= width ? siblingX = 0 : siblingX < 0 ? siblingX = width - 1 : null;
+                                siblingY >= height ? siblingY = 0 : siblingY < 0 ? siblingY = height - 1 : null;
+                            }
+                            try {
+                                cells[siblingY][siblingX] && counter++;
+                            } catch (e) {};
+                        }
                     }
                 }
                 // console.log(`${cell} cell at (${x}, ${y}) => counter=${counter}`);
@@ -199,4 +204,3 @@ class States {
         this.current = this.states.length - 1;
     };
 }
-

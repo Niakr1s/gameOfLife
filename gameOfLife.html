@@ -1,83 +1,88 @@
 <!DOCTYPE html>
 <html lang="en" class="mdl-js">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Game Of Life</title>
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
-          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="src/gameOfLife.css">
 </head>
+
 <body>
-<br>
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-md-9">
-            <div id="display"></div><hr>
+    <br>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-9">
+                <div id="display"></div>
+                <hr>
 
-            <div class="d-flex justify-content-center" id="controlButtons">
-                <button class="btn btn-outline-primary p-2" id="first">Начало</button>&nbsp;
-                <button class="btn btn-outline-primary p-2" id="back">Назад</button>&nbsp;
-                <button class="btn btn-outline-primary p-2" id="auto">Авто</button>&nbsp;
-                <button class="btn btn-outline-primary p-2" id="stop" disabled>Стоп</button>&nbsp;
-                <button class="btn btn-outline-primary p-2" id="forward">Вперед</button>&nbsp;
-                <button class="btn btn-outline-primary p-2" id="last">Конец</button>&nbsp;
-                <span class="p-2" id="output"></span>
+                <div class="d-flex justify-content-center" id="controlButtons">
+                    <button class="btn btn-outline-primary p-2" id="first">Начало</button>&nbsp;
+                    <button class="btn btn-outline-primary p-2" id="back">Назад</button>&nbsp;
+                    <button class="btn btn-outline-primary p-2" id="auto">Авто</button>&nbsp;
+                    <button class="btn btn-outline-primary p-2" id="stop" disabled>Стоп</button>&nbsp;
+                    <button class="btn btn-outline-primary p-2" id="forward">Вперед</button>&nbsp;
+                    <button class="btn btn-outline-primary p-2" id="last">Конец</button>&nbsp;
+                    <span class="p-2" id="output"></span>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <label class="slider-wrapper">
+                        <input type="range" min="1" max="100" id="x" list="tickmarksX">
+                    </label>&nbsp;
+                    <label class="slider-wrapper">
+                        <input type="range" min="1" max="50" id="y" list="tickmarksY">
+                    </label>&nbsp;
+                    <button class="btn btn-outline-primary p-2 align-self-center" id="random">Зарандомить</button>
+                </div>
+                <datalist id="tickmarksX">
+                    <option value="1" label="1">
+                        <option value="10">
+                            <option value="20">
+                                <option value="30">
+                                    <option value="40">
+                                        <option value="50" label="50">
+                                            <option value="60">
+                                                <option value="70">
+                                                    <option value="80">
+                                                        <option value="90">
+                                                            <option value="100" label="100">
+                </datalist>
+
+                <datalist id="tickmarksY">
+                    <option value="1" label="1">
+                        <option value="10">
+                            <option value="20">
+                                <option value="30">
+                                    <option value="40">
+                                        <option value="50" label="50">
+                </datalist>
+
+                <div class="d-flex justify-content-center">
+                    <form class="form-inline" id="levelSelectorForm">
+                        <select class="custom-select" name="select"></select>&nbsp;
+                        <button type="submit" class="btn btn-outline-primary p-2 align-self-center">Загрузить</button>
+                    </form>
+                </div>
+                <hr>
+                <ul>Правила:
+                    <li>Живая клетка с менее чем 2 или более чем 3 живых соседей умирает</li>
+                    <li>Живая клетка с 2 или 3 живых соседей остается живой</li>
+                    <li>Мертвая клетка с 3 живых соседей остается оживает</li>
+                </ul>
             </div>
 
-            <div class="d-flex justify-content-center">
-                <label class="slider-wrapper">
-                    <input type="range" min="1" max="100" id="x" list="tickmarksX">
-                </label>&nbsp;
-                <label class="slider-wrapper">
-                    <input type="range" min="1" max="50" id="y" list="tickmarksY">
-                </label>&nbsp;
-                <button class="btn btn-outline-primary p-2 align-self-center" id="random">Зарандомить</button>
-            </div>
-            <datalist id="tickmarksX">
-                <option value="1" label="1">
-                <option value="10">
-                <option value="20">
-                <option value="30">
-                <option value="40">
-                <option value="50" label="50">
-                <option value="60">
-                <option value="70">
-                <option value="80">
-                <option value="90">
-                <option value="100" label="100">
-            </datalist>
 
-            <datalist id="tickmarksY">
-                <option value="1" label="1">
-                <option value="10">
-                <option value="20">
-                <option value="30">
-                <option value="40">
-                <option value="50" label="50">
-            </datalist>
-
-            <div class="d-flex justify-content-center">
-                <form class="form-inline" id="levelSelectorForm">
-                    <select class="custom-select" name="select"></select>&nbsp;
-                    <button type="submit" class="btn btn-outline-primary p-2 align-self-center">Загрузить</button>
-                </form>
-            </div>
-						<ul>
-							<li>Живая клетка с менее чем 2 или более чем 3 живых соседей умирает</li>
-							<li>Живая клетка с 2 или 3 живых соседей остается живой</li>
-							<li>Мертвая клетка с 3 живых соседей остается оживает</li>
-						</ul>
         </div>
-
 
     </div>
 
-</div>
-
-<script src="src/interestingLevels.js"></script>
-<script src="src/logic.js"></script>
-<script src="src/output.js"></script>
+    <script src="src/interestingLevels.js"></script>
+    <script src="src/logic.js"></script>
+    <script src="src/output.js"></script>
 </body>
+
 </html>
