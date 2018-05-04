@@ -18,7 +18,7 @@ class Display {
         this.dom = document.createElement('table');
         this.dom.className = 'game';
         const width = '720';
-        const cellDimension = Math.min(width / newState.level.width, (screen.availHeight - 300) / newState.level.height);
+        const cellDimension = Math.min((screen.width - 30) / newState.level.width, (screen.height - 300) / newState.level.height);
         this.dom.width = (cellDimension * newState.level.width) + 'px';
 
         for (let y = 0; y < newState.level.height; y++) {
